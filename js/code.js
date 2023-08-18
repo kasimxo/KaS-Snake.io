@@ -7,17 +7,14 @@ const score_display = document.getElementById("score");
 const highscore_display = document.getElementById("high_score");
 
 let high_score = localStorage.getItem("HS");
-//document.getElementById("test").innerHTML = high_score;
 if(high_score != null) {
     highscore_display.innerHTML = "High score: " + high_score;
 }
-let snake = [
-    {x: 200, y: 200},
-    {x: 190, y: 200},
-    {x: 180, y: 200},
-    {x: 170, y: 200},
-    {x: 160, y: 200}
-]
+
+//We declare the variable here but set the position on game start
+let snake = []
+
+let playing = false;
 
 let score = 0;
 
@@ -27,6 +24,10 @@ let food_y;
 let dx = 10;
 let dy = 0;
 
+//this is initial speed
+let interval = 200;
+
+
 // Get the canvas element
 const snakeboard = document.getElementById("snakeboard");
 // Return a two dimensional drawing context
@@ -35,9 +36,25 @@ const snakeboard_ctx = snakeboard.getContext("2d");
 document.addEventListener("keydown", change_direction);
 
 // Start game
-main();
+startGame();
 
-gen_food();
+function startGame() {
+    snake = [
+        {x: 200, y: 200},
+        {x: 190, y: 200},
+        {x: 180, y: 200},
+        {x: 170, y: 200},
+        {x: 160, y: 200}
+    ]
+    document.getElementById("reset").innerHTML = "";
+    playing = true;
+    main();
+    gen_food();
+}
+
+
+
+
 
 // main function called repeatedly to keep the game running
 function main() {
@@ -48,6 +65,8 @@ function main() {
         if(score>high_score) {
             localStorage.setItem("HS", score);
         }
+        document.getElementById("reset").innerHTML = "Press R to play again";
+        playing = false;
         return;
     }
 
@@ -60,7 +79,7 @@ function main() {
         move_snake();
         drawSnake();
         main();
-    }, 100)
+    }, interval)
 
 }
 
@@ -104,6 +123,7 @@ function move_snake()
     if(has_eaten_food) {
         score+=10;
         score_display.innerHTML = "Score: " + score;
+        level();
         gen_food();
     } else {
         snake.pop();
@@ -120,6 +140,7 @@ const UP_KEY = 38;
 const UP_KEY_W = 87;
 const DOWN_KEY = 40;
 const DOWN_KEY_S = 83;
+const RESET = 82;
 
 const keyPressed = event.keyCode;
 const goingUp = dy === -10;
@@ -174,6 +195,11 @@ const goingLeft = dx === -10;
         dx = 0;
         dy = 10;
     }
+
+    if (keyPressed === RESET ) {
+        document.getElementById("reset").innerHTML = "prue";
+        startGame();
+    }
 }
 
 function has_game_ended()
@@ -213,4 +239,13 @@ function drawFood()
     snakeboard_ctx.strokestyle = 'darkgreen';
     snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
     snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
+}
+
+/* 
+Here we decrease interval to increse game speed (dificulty)
+*/
+function level() {
+    if (score%50==0 && score < 500){
+        interval-=20;
+    }
 }
