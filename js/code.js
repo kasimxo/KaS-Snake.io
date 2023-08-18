@@ -4,10 +4,13 @@ const board_background = "white";
 const snake_col = 'lightblue';
 const snake_border = 'darkblue';
 const score_display = document.getElementById("score");
+const highscore_display = document.getElementById("high_score");
 
 let high_score = localStorage.getItem("HS");
-
-
+//document.getElementById("test").innerHTML = high_score;
+if(high_score != null) {
+    highscore_display.innerHTML = "High score: " + high_score;
+}
 let snake = [
     {x: 200, y: 200},
     {x: 190, y: 200},
@@ -42,7 +45,9 @@ function main() {
     if(has_game_ended()) {
         //Aquí añadir que se comruebe si la score es mayor que el 
         //highscore para actualizarlo y guardarlo
-        
+        if(score>high_score) {
+            localStorage.setItem("HS", score);
+        }
         return;
     }
 
