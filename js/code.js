@@ -1,7 +1,7 @@
 
-const board_border = '#202f17';
+const board_border = '#233413';
 const board_background = "#9bc803";
-const snake_col = '#202f17';
+const snake_col = '#233413';
 //const snake_border = 'darkblue';
 const score_display = document.getElementById("score");
 const highscore_display = document.getElementById("high_score");
@@ -10,6 +10,8 @@ let high_score = localStorage.getItem("HS");
 if(high_score != null) {
     highscore_display.innerHTML = "High score: " + high_score;
 }
+
+let begun = false;
 
 //We declare the variable here but set the position on game start
 let snake = []
@@ -36,9 +38,30 @@ const snakeboard_ctx = snakeboard.getContext("2d");
 document.addEventListener("keydown", change_direction);
 
 // Start game
-startGame();
+//showElements();
+
+
+function showElements() {
+
+    //Elements we want to show
+    let e1 = document.getElementById("score_text");
+    let e2 = document.getElementById("separator");
+    let e3 = document.getElementById("snakeboard");
+    
+    //Elements we want to hide
+    let i1 = document.getElementById("intro");
+    let i2 = document.getElementById("press_any_key");
+
+    e1.setAttribute("class","show");
+    e2.setAttribute("class","show");
+    e3.setAttribute("class","show");
+
+    i1.setAttribute("class","hide");
+    i2.setAttribute("class","hide");
+}
 
 function startGame() {
+
     snake = [
         {x: 200, y: 200},
         {x: 190, y: 200},
@@ -148,6 +171,12 @@ const goingDown = dy === 10;
 const goingRight = dx === 10;  
 const goingLeft = dx === -10;
 
+    if(keyPressed != null && !begun) {
+        begun = true;
+        showElements();
+        startGame();
+    }
+
     if (keyPressed === LEFT_KEY && !goingRight)
     {    
         dx = -10;
@@ -196,7 +225,7 @@ const goingLeft = dx === -10;
         dy = 10;
     }
 
-    if (keyPressed === RESET ) {
+    if (keyPressed === RESET && !playing) {
         document.getElementById("reset").innerHTML = "prue";
         startGame();
     }
@@ -235,7 +264,7 @@ snake.forEach(function has_snake_eaten_food(part) {
 }
 function drawFood()
 {
-    snakeboard_ctx.fillStyle = '#202f17';
+    snakeboard_ctx.fillStyle = '#233413';
     //snakeboard_ctx.strokestyle = 'darkgreen';
     snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
     //snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
