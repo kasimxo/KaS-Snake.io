@@ -1,5 +1,7 @@
 body {
     background-color: #9bc803;
+    width: 720px;
+    height: 480px;
 }
 section {
     display: flex;
