@@ -1,4 +1,6 @@
 body {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
     margin: 5px;    
     background-color: #9bc803;
     width: 720px;
@@ -19,24 +21,29 @@ hr {
     height: 1px;
     background-color: #233413;
     margin-right: 25px;
-    width: 720px;
+    width:710px;
 }
 #snakeboard {
   border-width: 5px;
   left: 50%;
-  
 }
 .content {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin-right: 10px;
 }
-p {
-    font-family: 'Courier New', Courier, monospace;
+
+#reset {
+    position: absolute;
+    top:260px;
+    align-self: center;
+    font-size: 25px;
 }
+
 #intro {
     text-align: center;
-    font-family: 'Courier New', Courier, monospace;
+    /* font-family: 'Courier New', Courier, monospace; */
     color: #233413;
     font-size: large;
     animation-name: fromTop;

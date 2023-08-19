@@ -11,6 +11,12 @@ if(high_score != null) {
     highscore_display.innerHTML = "High score: " + high_score;
 }
 
+/* 
+This variable is used to change the resolution inside the canvas.
+Use multiples of 10.
+*/
+let resolution = 20;
+
 let begun = false;
 
 //We declare the variable here but set the position on game start
@@ -18,16 +24,16 @@ let snake = []
 
 let playing = false;
 
-let score = 0;
+let score;
 
 let food_x;
 let food_y;
 
-let dx = 10;
-let dy = 0;
+let dx;
+let dy;
 
 //this is initial speed
-let interval = 200;
+let interval;
 
 
 // Get the canvas element
@@ -61,6 +67,11 @@ function showElements() {
 }
 
 function startGame() {
+
+    interval = 200;
+    score = 0;
+    dx = resolution;
+    dy = 0;
 
     snake = [
         {x: 200, y: 200},
@@ -133,7 +144,7 @@ function drawSnakePart(snakePart) {
     //snakeboard_ctx.strokestyle = snake_border;
     // Draw a "filled" rectangle to represent the snake part at the coordinates
     // the part is located
-    snakeboard_ctx.fillRect(snakePart.x, snakePart.y, 10, 10);
+    snakeboard_ctx.fillRect(snakePart.x, snakePart.y, resolution, resolution);
     // Draw a border around the snake part
     //snakeboard_ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
 }
@@ -179,54 +190,53 @@ const goingLeft = dx === -10;
 
     if (keyPressed === LEFT_KEY && !goingRight)
     {    
-        dx = -10;
+        dx = -resolution;
         dy = 0;  
     }
 
     if (keyPressed === LEFT_KEY_A && !goingRight)
     {    
-        dx = -10;
+        dx = -resolution;
         dy = 0;  
     }
 
     if (keyPressed === UP_KEY && !goingDown)
     {    
         dx = 0;
-        dy = -10;
+        dy = -resolution;
     }
 
     if (keyPressed === UP_KEY_W && !goingDown)
     {    
         dx = 0;
-        dy = -10;
+        dy = -resolution;
     }
 
     if (keyPressed === RIGHT_KEY && !goingLeft)
     {    
-        dx = 10;
+        dx = resolution;
         dy = 0;
     }
 
     if (keyPressed === RIGHT_KEY_D && !goingLeft)
     {    
-        dx = 10;
+        dx = resolution;
         dy = 0;
     }
 
     if (keyPressed === DOWN_KEY && !goingUp)
     {    
         dx = 0;
-        dy = 10;
+        dy = resolution;
     }
     
     if (keyPressed === DOWN_KEY_S && !goingUp)
     {    
         dx = 0;
-        dy = 10;
+        dy = resolution;
     }
 
     if (keyPressed === RESET && !playing) {
-        document.getElementById("reset").innerHTML = "prue";
         startGame();
     }
 }
@@ -240,9 +250,9 @@ for (let i = 4; i < snake.length; i++)
     return true
 }
 const hitLeftWall = snake[0].x < 0;  
-const hitRightWall = snake[0].x > snakeboard.width - 10;
+const hitRightWall = snake[0].x > snakeboard.width - resolution;
 const hitToptWall = snake[0].y < 0;
-const hitBottomWall = snake[0].y > snakeboard.height - 10;
+const hitBottomWall = snake[0].y > snakeboard.height - resolution;
 
 return hitLeftWall ||  hitRightWall || hitToptWall || hitBottomWall
 }
@@ -250,13 +260,13 @@ return hitLeftWall ||  hitRightWall || hitToptWall || hitBottomWall
 
 function random_food(min, max)
 {  
-return Math.round((Math.random() * (max-min) + min) / 10) * 10;
+return Math.round((Math.random() * (max-min) + min) / resolution) * resolution;
 }
 
 function gen_food() 
 {  
-food_x = random_food(0, snakeboard.width - 10);
-food_y = random_food(0, snakeboard.height - 10);
+food_x = random_food(0, snakeboard.width - resolution);
+food_y = random_food(0, snakeboard.height - resolution);
 snake.forEach(function has_snake_eaten_food(part) {
         const has_eaten = part.x == food_x && part.y == food_y;
         if (has_eaten) gen_food();
@@ -266,7 +276,7 @@ function drawFood()
 {
     snakeboard_ctx.fillStyle = '#233413';
     //snakeboard_ctx.strokestyle = 'darkgreen';
-    snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
+    snakeboard_ctx.fillRect(food_x, food_y, resolution, resolution);
     //snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
 }
 
