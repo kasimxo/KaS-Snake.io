@@ -1,8 +1,8 @@
 
-const board_border = 'black';
-const board_background = "white";
-const snake_col = 'lightblue';
-const snake_border = 'darkblue';
+const board_border = '#202f17';
+const board_background = "#9bc803";
+const snake_col = '#202f17';
+//const snake_border = 'darkblue';
 const score_display = document.getElementById("score");
 const highscore_display = document.getElementById("high_score");
 
@@ -107,12 +107,12 @@ function drawSnakePart(snakePart) {
     // Set the colour of the snake part
     snakeboard_ctx.fillStyle = snake_col;
     // Set the border colour of the snake part
-    snakeboard_ctx.strokestyle = snake_border;
+    //snakeboard_ctx.strokestyle = snake_border;
     // Draw a "filled" rectangle to represent the snake part at the coordinates
     // the part is located
     snakeboard_ctx.fillRect(snakePart.x, snakePart.y, 10, 10);
     // Draw a border around the snake part
-    snakeboard_ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
+    //snakeboard_ctx.strokeRect(snakePart.x, snakePart.y, 10, 10);
 }
 
 function move_snake()
@@ -122,7 +122,7 @@ function move_snake()
     const has_eaten_food = snake[0].x === food_x && snake[0].y === food_y;
     if(has_eaten_food) {
         score+=10;
-        score_display.innerHTML = "Score: " + score;
+        score_display.innerHTML = score;
         level();
         gen_food();
     } else {
@@ -211,9 +211,9 @@ for (let i = 4; i < snake.length; i++)
     return true
 }
 const hitLeftWall = snake[0].x < 0;  
-const hitRightWall = snake[0].x >= snakeboard.width - 10;
+const hitRightWall = snake[0].x > snakeboard.width - 10;
 const hitToptWall = snake[0].y < 0;
-const hitBottomWall = snake[0].y >= snakeboard.height - 10;
+const hitBottomWall = snake[0].y > snakeboard.height - 10;
 
 return hitLeftWall ||  hitRightWall || hitToptWall || hitBottomWall
 }
@@ -235,17 +235,17 @@ snake.forEach(function has_snake_eaten_food(part) {
 }
 function drawFood()
 {
-    snakeboard_ctx.fillStyle = 'lightgreen';
-    snakeboard_ctx.strokestyle = 'darkgreen';
+    snakeboard_ctx.fillStyle = '#202f17';
+    //snakeboard_ctx.strokestyle = 'darkgreen';
     snakeboard_ctx.fillRect(food_x, food_y, 10, 10);
-    snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
+    //snakeboard_ctx.strokeRect(food_x, food_y, 10, 10);
 }
 
 /* 
 Here we decrease interval to increse game speed (dificulty)
 */
 function level() {
-    if (score%50==0 && score < 500){
+    if (score%50==0 && score < 400){
         interval-=20;
     }
 }

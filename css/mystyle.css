@@ -1,19 +1,26 @@
 body {
-    background-color: gray;
+    background-color: #9bc803;
 }
 section {
     display: flex;
-    flex-direction: column;
-    
+    /*flex-direction: column;*/
+    justify-content: space-between;
 }
-
+hr {
+    height: 1px;
+    background-color: #202f17;
+    width: 100%;
+}
 #snakeboard {
-   
   border-width: 5px;
   left: 50%;
   
 }
 .content {
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+}
+p {
+    font-family: 'Courier New', Courier, monospace;
 }
